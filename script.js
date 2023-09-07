@@ -5,6 +5,7 @@ let inputElem;
 let msgElem;
 let fruitNames; 
 let fruitNr;
+let selFruitsElem;
 
 
 // Funktion som körs då hela webbsidan är inladdad, dvs då all HTML-kod är utförd.
@@ -16,9 +17,11 @@ function init() {
     inputElem[1]=document.getElementById("input1");
     inputElem[2]=document.getElementById("input2");
     inputElem[3]=document.getElementById("input3");
+    selFruitsElem = document.getElementById("selectedFruits");
     msgElem=document.getElementById("message");
     document.getElementById("btn1").onclick=showFruit;
     document.getElementById("btn2").onclick=checkName;
+    document.getElementById("btn3").onclick=addFruits;
 } // End init
 window.onload = init; // Se till att init aktiveras då sidan är inladdad
 
@@ -26,32 +29,65 @@ function showFruit() {
     let nr;
     let fruitUrl;
 
-    nr = Number(inputElem[1].value);
-    nr = parseInt(nr);
+    nr = getNr(1,5);
 
-    if(isNaN(nr)){
-         console.log("It is not a number");
-         msgElem.innerHTML = "<p>Skriv in en siffra</p>";
+    if (getNr !== null) {
+        fruitUrl = "./pics/fruit"+ nr +".jpg";  
+       document.getElementById("fruitImg").src = fruitUrl;
+    } else {
+        msgElem.innerHTML = "<p>:-(</p>"
     }
 
-    if(nr>=1&&nr<=5){ // Siffran givet av användaren väljer en frukt i galleriet och skriver ut det
-        inputElem[1].value = nr; 
-        console.log(nr);
-         fruitUrl = "./pics/fruit"+ nr +".jpg";  
-        document.getElementById("fruitImg").src = fruitUrl;
-    }else{
-        msgElem.innerHTML = "<p>Skriv in en siffra mellan 1 och 5</p>";
-        return;
-    } 
     fruitNr = nr;
 }
+
 function checkName() {
     let name;
-    name = Number(inputElem[2].value);
+    name = inputElem[2].value;
 
-    if (fruitNr = 0) {
-        msgElem.innerHTML = "<p>Du måste skriva en frukt! >:-(</p>";
-        return;
+    if (fruitNr === 0) {
+        msgElem.innerHTML = "<p>Du måste välja frukt</p>";
+        return NULL;
     }
 
+    if (name === fruitNames[fruitNr]) {
+        msgElem.innerHTML = "<p>Rätt namn</p>";
+    }
+    else {
+        msgElem.innerHTML = "<p>Fel namn</p>";
+    }
 }
+function getNr(elemNr, high) {
+    let nr;
+    nr = (inputElem[elemNr].value);
+    
+    if(isNaN(nr)){
+        console.log("It is not a number");
+        msgElem.innerHTML = "<p>Skriv in en siffra</p>";
+        return null;
+   }
+
+   if(nr>=1&&nr<=high){ // Siffran givet av användaren väljer en frukt i galleriet och skriver ut det
+       nr = parseInt(nr);
+       inputElem[elemNr].value = nr; 
+       console.log(nr);
+   } else {
+    return null;
+   }
+   return nr;
+    
+}
+
+function addFruits() {
+    let amount;
+    let imgList;
+
+    amount = inputElem[1].value;
+    imgList = selFruitsElem = fruitUrl;
+    if (name === fruitNames[fruitNr]) {
+
+    } else {
+        return;
+    }
+}
+
